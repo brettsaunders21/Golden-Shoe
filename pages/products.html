@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../js/utils.js"></script>
 
     <link rel="stylesheet" href="../css/smoothproducts.css">
 
@@ -31,6 +32,29 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
+
+        var db = firebase.firestore();
+        var html = ""
+        var group = getAllUrlParams(window.location.href).group;
+        var cat = getAllUrlParams(window.location.href).cat;
+        db.collection("products").doc(group).collection(cat)
+            .get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    doc.data().images.forEach(function(image) {
+                        html += "<a href=\"" + image + "\"><img src=\"" + image + "\" alt=\"\"></a>"
+                    });
+                });
+                document.getElementById('here').innerHTML = html;
+                $('.sp-wrap').smoothproducts();
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+        console.log(html);
+
     </script>
 
     <style>
@@ -127,8 +151,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-7" style="background-color: #80bdff">
-            <div class="sp-loading"><img src="images/sp-loading.gif" alt=""><br>LOADING IMAGES</div>
-            <div class="sp-wrap">
+            <div class="sp-loading"><img src="../images/sp-loading.gif" alt=""><br>LOADING IMAGES</div>
+            <div class="sp-wrap" id="here">
                 <a href="https://clarks.scene7.com/is/image/Pangaea2Build/26126741_W_10?wid=2000&hei=2000&fmt=jpg"><img src="https://clarks.scene7.com/is/image/Pangaea2Build/26126741_W_10?wid=2000&hei=2000&fmt=jpg" alt=""></a>
                 <a href="https://clarks.scene7.com/is/image/Pangaea2Build/26126741_W_2?wid=2000&hei=2000&fmt=jpg"><img src="https://clarks.scene7.com/is/image/Pangaea2Build/26126741_W_2?wid=2000&hei=2000&fmt=jpg" alt=""></a>
             </div>
