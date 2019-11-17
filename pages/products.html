@@ -9,6 +9,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" href="../css/smoothproducts.css">
+
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCC3nwywBKocMpJK04N2wub2U5IYcj7OJs",
+            authDomain: "goldenshoe-1daa8.firebaseapp.com",
+            databaseURL: "https://goldenshoe-1daa8.firebaseio.com",
+            projectId: "goldenshoe-1daa8",
+            storageBucket: "goldenshoe-1daa8.appspot.com",
+            messagingSenderId: "964528167562",
+            appId: "1:964528167562:web:d0fec48256e2a7817b6b73",
+            measurementId: "G-PF49M0F1TV"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+
     <style>
         .center-img {
             display: block;
@@ -91,21 +115,40 @@
         </ul>
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
             <li class="nav-item hidden-md hidden-sm">
-                <a class="nav-link" href="#"><img src="images/user.png" alt="Account" height="30" width=30></a>
+                <a class="nav-link" href="#"><img src="../images/user.png" alt="Account" height="30" width=30></a>
             </li>
             <li class="nav-item hidden-md hidden-sm">
-                <a class="nav-link" href="#"><img src="images/bag.png" alt="Cart" height="30" width=30></a>
+                <a class="nav-link" href="#"><img src="../images/bag.png" alt="Cart" height="30" width=30></a>
             </li>
         </ul>
     </div>
 </nav>
 
 <div class="container-fluid">
-
+    <div class="row">
+        <div class="col-sm-7" style="background-color: #80bdff">
+            <div class="sp-loading"><img src="images/sp-loading.gif" alt=""><br>LOADING IMAGES</div>
+            <div class="sp-wrap">
+                <a href="https://clarks.scene7.com/is/image/Pangaea2Build/26126741_W_10?wid=2000&hei=2000&fmt=jpg"><img src="https://clarks.scene7.com/is/image/Pangaea2Build/26126741_W_10?wid=2000&hei=2000&fmt=jpg" alt=""></a>
+                <a href="https://clarks.scene7.com/is/image/Pangaea2Build/26126741_W_2?wid=2000&hei=2000&fmt=jpg"><img src="https://clarks.scene7.com/is/image/Pangaea2Build/26126741_W_2?wid=2000&hei=2000&fmt=jpg" alt=""></a>
+            </div>
+        </div>
+        <div class="col-sm-5" style="background-color: #40bdff">col-sm-5</div>
+    </div>
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
     <p>Footer1</p>
 </div>
+
+<script type="text/javascript" src="../js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../js/smoothproducts.js"></script>
+<script type="text/javascript">
+    /* wait for images to load */
+    $(window).load(function() {
+        $('.sp-wrap').smoothproducts();
+    });
+</script>
 </body>
 </html>
+
