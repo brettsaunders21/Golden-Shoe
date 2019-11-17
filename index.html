@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Golden Shoe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <style>
+        #sidebar .list-group-item {
+            border-radius: 0;
+            background-color: #333;
+            color: #ccc;
+            border-left: 0;
+            border-right: 0;
+            border-color: #2c2c2c;
+            white-space: nowrap;
+        }
+
+        /* highlight active menu */
+        #sidebar .list-group-item:not(.collapsed) {
+            background-color: #222;
+        }
+
+        /* closed state */
+        #sidebar .list-group .list-group-item[aria-expanded="false"]::after {
+            content: " \f0d7";
+            font-family: FontAwesome;
+            display: inline;
+            text-align: right;
+            padding-left: 5px;
+        }
+
+        /* open state */
+        #sidebar .list-group .list-group-item[aria-expanded="true"] {
+            background-color: #222;
+        }
+        #sidebar .list-group .list-group-item[aria-expanded="true"]::after {
+            content: " \f0da";
+            font-family: FontAwesome;
+            display: inline;
+            text-align: right;
+            padding-left: 5px;
+        }
+
+        /* level 1*/
+        #sidebar .list-group .collapse .list-group-item  {
+            padding-left: 20px;
+        }
+
+        /* level 2*/
+        #sidebar .list-group .collapse > .collapse .list-group-item {
+            padding-left: 30px;
+        }
+
+        /* level 3*/
+        #sidebar .list-group .collapse > .collapse > .collapse .list-group-item {
+            padding-left: 40px;
+        }
+
+        @media (max-width:48em) {
+            /* overlay sub levels on small screens */
+            #sidebar .list-group .collapse.in, #sidebar .list-group .collapsing {
+                position: absolute;
+                z-index: 1;
+                width: 190px;
+            }
+            #sidebar .list-group > .list-group-item {
+                text-align: center;
+                padding: .75rem .5rem;
+            }
+            /* hide caret icons of top level when collapsed */
+            #sidebar .list-group > .list-group-item[aria-expanded="true"]::after,
+            #sidebar .list-group > .list-group-item[aria-expanded="false"]::after {
+                display:none;
+            }
+        }
+
+        /* change transition animation to width when entire sidebar is toggled */
+        #sidebar.collapse {
+            -webkit-transition-timing-function: ease;
+            -o-transition-timing-function: ease;
+            transition-timing-function: ease;
+            -webkit-transition-duration: .2s;
+            -o-transition-duration: .2s;
+            transition-duration: .2s;
+        }
+
+        #sidebar.collapsing {
+            opacity: 0.8;
+            width: 0;
+            -webkit-transition-timing-function: ease-in;
+            -o-transition-timing-function: ease-in;
+            transition-timing-function: ease-in;
+            -webkit-transition-property: width;
+            -o-transition-property: width;
+            transition-property: width;
+
+        }
+
+        .center-img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 70%;
+        }
+
+        /* Container holding the image and the text */
+        .img-container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        /* Centered text */
+        .img-centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cat:hover {
+            color: white;
+        }
+
+        .cat {
+            font-size: 50px;
+            color: #80bdff;
+            background-color: transparent;
+            border-color: transparent;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #333">
+    <a href="#sidebar" data-toggle="collapse"><img src="dropdown.png" height="30" width="30"></a>
+    <a class="navbar-brand mx-auto text-white" herf="#">Golden Shoe</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><img src="user.png" alt="Account" height="30" width=30></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><img src="bag.png" alt="Cart" height="30" width=30></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-xs-1 p-l-0 p-r-0 collapse in" id="sidebar">
+            <div class="list-group panel">
+                <a href="#menu1" class="list-group-item collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-book"></i> <span class="hidden-sm-down">Men</span></a>
+                <div class="collapse" id="menu1">
+                    <a href="#" class="list-group-item" data-parent="#menu1">View All</a>
+                    <a href="#" class="list-group-item" data-parent="#menu1">Boots</a>
+                    <a href="#" class="list-group-item" data-parent="#menu1">Boots</a>
+                </div>
+                <a href="#menu2" class="list-group-item collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-book"></i> <span class="hidden-sm-down">Women</span></a>
+                <div class="collapse" id="menu2">
+                    <a href="#" class="list-group-item" data-parent="#menu2">3.1</a>
+                    <a href="#" class="list-group-item" data-parent="#menu2">3.3</a>
+                </div>
+                <a href="#" class="list-group-item collapsed" data-parent="#sidebar"><span class="hidden-sm-down">About Us</span></a>
+                <a href="#" class="list-group-item collapsed" data-parent="#sidebar"><span class="hidden-sm-down">Contact Us</span></a>
+            </div>
+        </div>
+        <main class="col-md-9 col-xs-11 p-l-2 p-t-2">
+            <div class="img-container">
+                <img src="men.jpg" class="center-img">
+                <div class="img-centered"><button class="cat" herf="home.html">MENS SHOES</button></div>
+            </div>
+            <div class="img-container">
+                <img src="women1.jpg" class="center-img">
+                <div class="img-centered"><button class="cat" herf="home">WOMENS SHOES</button></div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <p>Footer</p>
+</div>
+</body>
+</html>
