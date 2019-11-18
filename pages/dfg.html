@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" class="gr__localhost"><head>
     <meta charset="UTF-8">
-    <title>Golden Shoe - Products</title>
+    <title>Golden Shoe - Checkout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" async="" src="http://cdn.chatbot.com/widget/plugin.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="../js/utils.js"></script>
@@ -69,30 +67,22 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
-
         createCart();
-
         var db = firebase.firestore();
-        var html = ""
-        var group = getAllUrlParams(window.location.href).group;
-        var cat = getAllUrlParams(window.location.href).cat;
-        db.collection("products").doc(group).collection(cat)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    var myCol = $('<div class="col-sm-3 col-md-3 pb-2"></div>');
-                    var myPanel = $('<a href="product.html?id=' + doc.data().name + '&cat=' + cat + '&group=' + group + '" class="btn"><div class="card"><img class="card-img-top" src="' + doc.data().images[0] + '" alt="Product Image"><div class="card-body"><h5 class="card-title">' + doc.data().name +'</h5><p class="card-text">'+doc.data().colour+'<br/> Price: £' + doc.data().price +'.00  </p></div></div></a>');
-                    myPanel.appendTo(myCol);
-                    myCol.appendTo('#contentPanel');
-                });
-            })
-            .catch(function(error) {
-                console.log("Error getting documents: ", error);
-            });
-
-    </script>
-</head>
-<body>
+        var itemSelected = "";
+    </script><script src="https://www.googletagmanager.com/gtag/js?l=dataLayer" async=""></script>
+    <script type="text/javascript" src="https://cdn.chatbot.com/widget/polyfill.js"></script><style id="chatbot-stylesheet" type="text/css">html.chatbot-mobile-opened > body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: hidden;
+}
+</style></head>
+<body data-gr-c-s-loaded="true">
 <nav class="navbar navbar-dark navbar-expand-md bg-faded justify-content-center" style="background-color: #333">
     <a href="../index.html" class="navbar-brand d-flex w-50 mr-auto font-weight-bolder" style="font-size: x-large">Golden Shoe</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
@@ -105,11 +95,11 @@
                     Men
                 </a>
                 <div class="dropdown-menu" style="font-size: large">
-                    <a class="dropdown-item" href="../pages/products.html?group=men&cat=all">View All</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=men&cat=boots">Boots</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=men&cat=trainers">Trainers</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=men&cat=smart">Smart Shoes</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=men&cat=shoes">Shoes</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=men&amp;cat=all">View All</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=men&amp;cat=boots">Boots</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=men&amp;cat=trainers">Trainers</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=men&amp;cat=smart">Smart Shoes</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=men&amp;cat=shoes">Shoes</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -117,11 +107,11 @@
                     Women
                 </a>
                 <div class="dropdown-menu" style="font-size: large">
-                    <a class="dropdown-item" href="../pages/products.html?group=women&cat=all">View All</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=women&cat=boots">Boots</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=women&cat=trainers">Trainers</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=women&cat=heels">Heels</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=women&cat=shoes">Shoes</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=women&amp;cat=all">View All</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=women&amp;cat=boots">Boots</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=women&amp;cat=trainers">Trainers</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=women&amp;cat=heels">Heels</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=women&amp;cat=shoes">Shoes</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -129,22 +119,22 @@
                     Kids
                 </a>
                 <div class="dropdown-menu" style="font-size: large">
-                    <a class="dropdown-item" href="../pages/products.html?group=kids&cat=all">View All</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=kids&cat=crib">Crib</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=kids&cat=infant">Infant</a>
-                    <a class="dropdown-item" href="../pages/products.html?group=kids&cat=kids">Kids</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=kids&amp;cat=all">View All</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=kids&amp;cat=crib">Crib</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=kids&amp;cat=infant">Infant</a>
+                    <a class="dropdown-item" href="../pages/products.html?group=kids&amp;cat=kids">Kids</a>
                 </div>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
             <li class="nav-item hidden-md hidden-sm">
-                <a class="nav-link" href="#"><img src="../images/user.png" alt="Account" height="30" width=30></a>
+                <a class="nav-link" href="#"><img src="../images/user.png" alt="Account" height="30" width="30"></a>
             </li>
             <li class="nav-item hidden-md hidden-sm">
-                <a class="nav-link" href="cart.html">
+                <a class="nav-link" href="#">
                     <div class="img-container">
-                        <img src="../images/bag.png" alt="Cart" height="30" width=30>
-                        <div class="img-centered font-weight-bolder" id="amount" style="margin-top: 22%"></div>
+                        <img src="../images/bag.png" alt="Cart" height="30" width="30">
+                        <div class="img-centered font-weight-bolder" id="amount" style="margin-top: 22%">2</div>
                     </div>
                 </a>
             </li>
@@ -153,7 +143,14 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="row" id="contentPanel"></div>
+    <br>
+    <h1 style="text-align: center">Checkout</h1>
+    <br>
+    <br>
+    <div class="list-group" id="checkout">
+
+        <a href="javascript:void(0);" onclick="selected('jenna lace');" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="font-size: xx-large">Jenna Lace</h5><small style="font-size: x-large">x4</small></div><p class="mb-1" style="font-size: large ">Price: £99.00.</p> <small style="font-size: medium">Colour: Black Suede</small><br><small style="font-size: medium">Size: 4</small></a><a href="javascript:void(0);" onclick="selected(" matron="" ella");"="" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="font-size: xx-large">Matron Ella</h5><small style="font-size: x-large">x1</small></div><p class="mb-1" style="font-size: large ">Price: £69.00.</p> <small style="font-size: medium">Colour: Black Leather</small><br><small style="font-size: medium">Size: 4</small></a></div>
+    <br>
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -161,7 +158,13 @@
 </div>
 
 <script>
+    displayCart();
     document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+
+    function selected(item) {
+        itemSelected = item;
+        console.log(item)
+    }
 </script>
 
 <!-- Start of ChatBot code -->
@@ -176,6 +179,7 @@
 </script>
 <!-- End of ChatBot code -->
 
-</body>
-</html>
 
+
+
+<div id="chatbot-chat" style="background-color: transparent; pointer-events: none; z-index: 2147483639; max-height: 100%; position: fixed; right: 0px; bottom: 0px; border: 0px; width: 100px; height: 100px; max-width: 100%; overflow: hidden; opacity: 1;"><iframe src="https://cdn.chatbot.com/widget/chat.html?id=5dd2b459c1c82e00078f00f7&amp;branding=true&amp;v=504" id="chatbot-chat-frame" style="pointer-events: all; background: none; border: 0px; float: none; position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%; margin: 0px; padding: 0px;"></iframe></div></body></html>
