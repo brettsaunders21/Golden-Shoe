@@ -8,6 +8,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/cart.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+
+    <link rel="stylesheet" href="css/smoothproducts.css">
 
     <style>
         .center-img {
@@ -44,6 +48,11 @@
             border-color: transparent;
         }
     </style>
+
+    <script>
+        createCart();
+    document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-md bg-faded justify-content-center" style="background-color: #333">
@@ -94,7 +103,12 @@
                 <a class="nav-link" href="#"><img src="images/user.png" alt="Account" height="30" width=30></a>
             </li>
             <li class="nav-item hidden-md hidden-sm">
-                <a class="nav-link" href="#"><img src="images/bag.png" alt="Cart" height="30" width=30></a>
+                <a class="nav-link" href="#">
+                    <div class="img-container">
+                        <img src="images/bag.png" alt="Cart" height="30" width=30>
+                        <div class="img-centered font-weight-bolder" id="amount" style="margin-top: 22%"></div>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>
@@ -114,6 +128,10 @@
 <div class="jumbotron text-center" style="margin-bottom:0">
     <p>Footer</p>
 </div>
+
+<script type="text/javascript">
+    document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+</script>
 
 <!-- Start of ChatBot code -->
 <script type="text/javascript">

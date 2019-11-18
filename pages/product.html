@@ -8,7 +8,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="../js/utils.js"></script>
+    <script type="text/javascript" src="../js/utils.js"></script>
+    <script type="text/javascript" src="../js/cart.js"></script>
 
     <link rel="stylesheet" href="../css/smoothproducts.css">
 
@@ -43,6 +44,9 @@
             var details = $('<h3>'+doc.data().name+'</h3>' +
                 '<h4>£'+doc.data().price+'.00</h4>' +
                 '<p></p><h5>Colour: '+doc.data().colour+'</h5>' +
+                '<p></p>' +
+                '<button type="button" class="btn btn-secondary" onclick="trigger()">Add to cart</button>\n' +
+                '<p></p>' +
                 '<h5>Sizes</h5>' +
                 '<h6>'+doc.data().size+'</h6>' +
                 '<p></p><h5>Description</h5><p>'+doc.data().description+'</p>');
@@ -57,13 +61,56 @@
         });
         $('.sp-wrap').smoothproducts();
 
+        function trigger() {
+            db.collection("products").doc(group).collection(cat).doc(id).onSnapshot(function(doc) {
+                addToCart(doc.data())
+            });
+            document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length + 1;
+        }
+
 
     </script>
+
+    <style>
+        .center-img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 70%;
+        }
+
+        /* Container holding the image and the text */
+        .img-container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        /* Centered text */
+        .img-centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cat:hover {
+            color: white;
+        }
+
+        .cat {
+            font-size: xx-large;
+            color: #80bdff;
+            border-color: #1b1e21;
+            background-color: transparent;
+            border-color: transparent;
+        }
+    </style>
 
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-md bg-faded justify-content-center" style="background-color: #333">
-    <a href="#" class="navbar-brand d-flex w-50 mr-auto font-weight-bolder" style="font-size: x-large">Golden Shoe</a>
+    <a href="../index.html" class="navbar-brand d-flex w-50 mr-auto font-weight-bolder" style="font-size: x-large">Golden Shoe</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -110,7 +157,12 @@
                 <a class="nav-link" href="#"><img src="../images/user.png" alt="Account" height="30" width=30></a>
             </li>
             <li class="nav-item hidden-md hidden-sm">
-                <a class="nav-link" href="#"><img src="../images/bag.png" alt="Cart" height="30" width=30></a>
+                <a class="nav-link" href="#">
+                    <div class="img-container">
+                        <img src="../images/bag.png" alt="Cart" height="30" width=30>
+                        <div class="img-centered font-weight-bolder" id="amount" style="margin-top: 22%"></div>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>
@@ -138,7 +190,9 @@
 <script type="text/javascript">
     /* wait for images to load */
     $(window).load(function() {
+        createCart();
         $('.sp-wrap').smoothproducts();
+        document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
     });
 
     if (performance.navigation.type == 1)  $('.sp-wrap').smoothproducts();
