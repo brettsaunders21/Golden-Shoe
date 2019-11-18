@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Golden Shoe - Products</title>
+    <title>Golden Shoe - Checkout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -69,27 +69,9 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
-
         createCart();
-
         var db = firebase.firestore();
-        var html = ""
-        var group = getAllUrlParams(window.location.href).group;
-        var cat = getAllUrlParams(window.location.href).cat;
-        db.collection("products").doc(group).collection(cat)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    var myCol = $('<div class="col-sm-3 col-md-3 pb-2"></div>');
-                    var myPanel = $('<a href="product.html?id=' + doc.data().name + '&cat=' + cat + '&group=' + group + '" class="btn"><div class="card"><img class="card-img-top" src="' + doc.data().images[0] + '" alt="Product Image"><div class="card-body"><h5 class="card-title">' + doc.data().name +'</h5><p class="card-text">'+doc.data().colour+'<br/> Price: £' + doc.data().price +'.00  </p></div></div></a>');
-                    myPanel.appendTo(myCol);
-                    myCol.appendTo('#contentPanel');
-                });
-            })
-            .catch(function(error) {
-                console.log("Error getting documents: ", error);
-            });
-
+        var itemSelected = "";
     </script>
 </head>
 <body>
@@ -153,7 +135,15 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="row" id="contentPanel"></div>
+    <br/>
+    <h1 style="text-align: center">Checkout</h1>
+    <br/>
+    <button type="button" class="btn btn-primary" onclick="remove()">Remove</button>
+    <br/>
+    <div class="list-group" id="checkout">
+
+    </div>
+    <br/>
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -161,7 +151,19 @@
 </div>
 
 <script>
+    displayCart();
     document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+
+    function selected(item) {
+        itemSelected = item;
+        console.log(item)
+    }
+
+    function remove() {
+        removeFromCart(itemSelected);
+        document.getElementById('checkout').innerHTML = "";
+        displayCart()
+    }
 </script>
 
 <!-- Start of ChatBot code -->
