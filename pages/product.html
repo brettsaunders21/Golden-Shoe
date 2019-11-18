@@ -40,10 +40,9 @@
         var id = getAllUrlParams(window.location.href).id;
         id = id.replace('%20',' ');
         db.collection("products").doc(group).collection(cat).doc(id).onSnapshot(function(doc) {
-            console.log(doc);
             var details = $('<h3>'+doc.data().name+'</h3>' +
                 '<h4>£'+doc.data().price+'.00</h4>' +
-                '<p></p><h5>COLOUR: '+doc.data().colour+'</h5>' +
+                '<p></p><h5>Colour: '+doc.data().colour+'</h5>' +
                 '<h5>Sizes</h5>' +
                 '<h6>'+doc.data().size+'</h6>' +
                 '<p></p><h5>Description</h5><p>'+doc.data().description+'</p>');
@@ -56,8 +55,9 @@
             document.getElementById('here').innerHTML = html;
             $('.sp-wrap').smoothproducts();
         });
-        console.log(html);
         $('.sp-wrap').smoothproducts();
+
+
     </script>
 
 </head>
@@ -118,13 +118,14 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-5">
+            <p></p>
             <div class="sp-loading" ><img src="../images/sp-loading.gif" alt=""><br>LOADING IMAGES</div>
             <div class="sp-wrap" id="here">
 
             </div>
         </div>
-        <div class="col-sm-5" id="panel"></div>
+        <div class="col-sm-7" id="panel"><p></p></div>
     </div>
 </div>
 
