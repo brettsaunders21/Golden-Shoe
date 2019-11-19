@@ -66,10 +66,10 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
         createCart();
         var db = firebase.firestore();
         var itemSelected = "";
+        var discount = 0;
     </script><script src="https://www.googletagmanager.com/gtag/js?l=dataLayer" async=""></script>
     <script type="text/javascript" src="https://cdn.chatbot.com/widget/polyfill.js"></script><style id="chatbot-stylesheet" type="text/css">html.chatbot-mobile-opened > body {
     position: fixed;
@@ -134,7 +134,7 @@
                 <a class="nav-link" href="#">
                     <div class="img-container">
                         <img src="../images/bag.png" alt="Cart" height="30" width="30">
-                        <div class="img-centered font-weight-bolder" id="amount" style="margin-top: 22%">2</div>
+                        <div class="img-centered font-weight-bolder" id="amount" style="margin-top: 22%">1</div>
                     </div>
                 </a>
             </li>
@@ -146,24 +146,75 @@
     <br>
     <h1 style="text-align: center">Checkout</h1>
     <br>
+    <div class="text-center">
+        <button type="button" class="btn btn-secondary" onclick="remove()">Remove Selected Item</button>
+    </div>
     <br>
     <div class="list-group" id="checkout">
 
-        <a href="javascript:void(0);" onclick="selected('jenna lace');" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="font-size: xx-large">Jenna Lace</h5><small style="font-size: x-large">x4</small></div><p class="mb-1" style="font-size: large ">Price: £99.00.</p> <small style="font-size: medium">Colour: Black Suede</small><br><small style="font-size: medium">Size: 4</small></a><a href="javascript:void(0);" onclick="selected(" matron="" ella");"="" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="font-size: xx-large">Matron Ella</h5><small style="font-size: x-large">x1</small></div><p class="mb-1" style="font-size: large ">Price: £69.00.</p> <small style="font-size: medium">Colour: Black Leather</small><br><small style="font-size: medium">Size: 4</small></a></div>
+        <a href="javascript:void(0);" onclick="selected('Demi Beat');" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="font-size: xx-large">Demi Beat</h5><small style="font-size: x-large">x4</small></div><p class="mb-1" style="font-size: large ">Price: £89.00.</p> <small style="font-size: medium">Colour: Leopard Print Pony</small><br><small style="font-size: medium">Size: 4</small></a></div>
+    <br>
+    <form class="form-inline justify-content-center" onsubmit="applyCoupon()">
+        <input type="text" class="form-control" id="couponCode" placeholder="Enter Coupon Code">
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+    <br>
+    <h3 class="text-center" id="total">Total: £356.00</h3>
     <br>
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <p>Footer1</p>
+    <div class="row text-center">
+        <a class="btn btn-default" href="#">About Us</a>
+        <a class="btn btn-default" href="#">FAQ</a>
+        <a class="btn btn-default" href="#">Customer Services</a>
+        <a class="btn btn-default" href="#">Returns and Refunds</a>
+        <a class="btn btn-default" href="#">Delivery</a>
+    </div>
 </div>
 
 <script>
     displayCart();
     document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+    if (discount != 0) {
+        document.getElementById('total').innerHTML = "Total: £"+sessionStorage.getItem("total") / (discount/100)+".00";
+    } else {
+        document.getElementById('total').innerHTML = "Total: £"+sessionStorage.getItem("total")+".00";
+    }
+
 
     function selected(item) {
         itemSelected = item;
         console.log(item)
+    }
+
+    function applyCoupon() {
+        var code = document.getElementById("couponCode").value;
+        console.log("Error getting documents: ");
+        db.collection("coupon").where("code", "==", code).get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    console.log(doc.id, " => ", doc.data());
+                    discount = doc.data().value;
+                });
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+                discount = discount;
+            });
+        if (discount > 0) alert("Discount of "+discount+"% applied!")
+    }
+
+    function remove() {
+        removeFromCart(itemSelected);
+        document.getElementById('checkout').innerHTML = "";
+        displayCart()
+        document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+        if (discount != 0) {
+            document.getElementById('total').innerHTML = "Total: £"+sessionStorage.getItem("total") / (discount/100)+".00";
+        } else {
+            document.getElementById('total').innerHTML = "Total: £"+sessionStorage.getItem("total")+".00";
+        }
     }
 </script>
 

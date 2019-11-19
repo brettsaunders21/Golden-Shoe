@@ -39,8 +39,25 @@
         var group = getAllUrlParams(window.location.href).group;
         var cat = getAllUrlParams(window.location.href).cat;
         var id = getAllUrlParams(window.location.href).id;
+        var size = 3;
         id = id.replace('%20',' ');
         db.collection("products").doc(group).collection(cat).doc(id).onSnapshot(function(doc) {
+            var sizes = "";
+            var sizeArray = doc.data().size;
+            for (var i = 0; i < sizeArray.length; i++) {
+                var out = "";
+                var out2 = "In Stock: ";
+                if (doc.data().stock[i] == 0) {
+                    out = "disabled";
+                    out2 = "No Stock: ";
+                }
+                var data = '<label class="btn btn-primary" '+ out +'>' +
+                    '<input type="radio" name="options" id="option2" onchange="setSize('+sizeArray[i]+')"' + out + '>' +out2 + sizeArray[i] +
+                    '  </label>';
+                sizes += data;
+            }
+
+
             var details = $('<h3>'+doc.data().name+'</h3>' +
                 '<h4>£'+doc.data().price+'.00</h4>' +
                 '<p></p><h5>Colour: '+doc.data().colour+'</h5>' +
@@ -49,7 +66,8 @@
                 '<button type="button" class="btn btn-secondary" onclick="trigger()">Buy Now</button>\n' +
                 '<p></p>' +
                 '<h5>Sizes</h5>' +
-                '<h6>'+doc.data().size+'</h6>' +
+                '<div class="btn-group" data-toggle="buttons">' +
+                sizes + '</div>' +
                 '<p></p><h5>Description</h5><p>'+doc.data().description+'</p>');
             details.appendTo('#panel')
 
@@ -64,9 +82,14 @@
 
         function trigger() {
             db.collection("products").doc(group).collection(cat).doc(id).onSnapshot(function(doc) {
-                addToCart(doc.data())
+                addToCart(doc.data(), size)
             });
             document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length + 1;
+        }
+
+        function setSize(s) {
+            console.log("hi")
+            size = s;
         }
 
 
@@ -183,7 +206,13 @@
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <p>Footer1</p>
+    <div class="row text-center">
+        <a class="btn btn-default" href="#">About Us</a>
+        <a class="btn btn-default" href="#">FAQ</a>
+        <a class="btn btn-default" href="#">Customer Services</a>
+        <a class="btn btn-default" href="#">Returns and Refunds</a>
+        <a class="btn btn-default" href="#">Delivery</a>
+    </div>
 </div>
 
 <script type="text/javascript" src="../js/jquery-2.1.3.min.js"></script>

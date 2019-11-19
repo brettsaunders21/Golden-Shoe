@@ -1,5 +1,7 @@
  function createCart() {
-
+    if (sessionStorage.getItem('discount') == null) {
+        sessionStorage.setItem('discount',0);
+    }
     if( sessionStorage.getItem('cart') == null ) {
         var cart = {};
         cart.items = [];
@@ -18,7 +20,7 @@ function processAddToCart(item) {
     sessionStorage.setItem( 'cart', JSON.stringify( cartCopy ) );
 }
 
-function addToCart(data) {
+function addToCart(data, size) {
     //Total cost
     var total = parseInt(sessionStorage.getItem('total'));
     total += parseInt(data.price);
@@ -29,7 +31,9 @@ function addToCart(data) {
     var add = true;
     for (var i = 0; i < cart.length; i++) {
         var obj = cart[i];
-        if (obj.name == data.name) {
+        console.log(obj.size)
+        console.log(size)
+        if (obj.name == data.name && parseInt(obj.size) == parseInt(size)) {
             add = false;
             var copy = cartobj;
             copy.items[i].amount += 1;
@@ -44,7 +48,7 @@ function addToCart(data) {
                 price: data.price,
                 colour: data.colour,
                 amount: 1,
-                size: 4
+                size: size
             }
         )
     }
@@ -73,6 +77,8 @@ function displayCart() {
         var details = $('<br/><br/><br/><h5 style="text-align: center">There are no items in your cart. Please add some before you checkout!</h5><br/><br/><br/><br/>');
         details.appendTo('#checkout')
     }
+
+
 }
 
 function removeFromCart(item) {

@@ -68,10 +68,30 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+        firebase.analytics()
+
         createCart();
-        var db = firebase.firestore();
         var itemSelected = "";
+        var discount = 0;
+        var db = firebase.firestore();
+
+        function applyCoupon() {
+            var codec = document.getElementById("couponCode").value;
+            //db.collection("coupon").doc(codec).onSnapshot(function(doc) {
+            //    console.log("hi")
+            //    discount = doc.data().value;
+            //});
+            if (codec == "anddigital") discount = 0.16;
+            if (codec == "test") discount = 0.05;
+            if (discount > 0) alert("Discount of "+discount+"% applied!");
+            if (discount == 0) alert("Please enter valid discount code");
+            sessionStorage.setItem('discount',discount);
+            if (sessionStorage.getItem('discount') != 0) {
+                document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total") - (sessionStorage.getItem("total") * sessionStorage.getItem('discount')));
+            } else {
+                document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total"));
+            }
+        }
     </script>
 </head>
 <body>
@@ -146,15 +166,38 @@
 
     </div>
     <br/>
+    <form class="form-inline justify-content-center" onsubmit="applyCoupon()">
+        <input type="text" class="form-control" id="couponCode" aria-describedby="Coupon Code for Discount" placeholder="Enter Coupon Code">
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+    <br/>
+    <h3 class="text-center" id="total"></h3>
+    <br/>
+    <div class="text-center">
+        <button type="button" class="btn btn-secondary" onclick="alert('Transfering to payment')">Checkout & Pay</button>
+    </div>
+    <br/>
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <p>Footer1</p>
+    <div class="row text-center">
+        <a class="btn btn-default" href="#">About Us</a>
+        <a class="btn btn-default" href="#">FAQ</a>
+        <a class="btn btn-default" href="#">Customer Services</a>
+        <a class="btn btn-default" href="#">Returns and Refunds</a>
+        <a class="btn btn-default" href="#">Delivery</a>
+    </div>
 </div>
 
 <script>
     displayCart();
     document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+    if (sessionStorage.getItem('discount') != 0) {
+        document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total") - (sessionStorage.getItem("total") * sessionStorage.getItem('discount')));
+    } else {
+        document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total"));
+    }
+
 
     function selected(item) {
         itemSelected = item;
@@ -166,6 +209,11 @@
         document.getElementById('checkout').innerHTML = "";
         displayCart()
         document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+        if (sessionStorage.getItem('discount') != 0) {
+            document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total") - (sessionStorage.getItem("total") * sessionStorage.getItem('discount')));
+        } else {
+            document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total"));
+        }
     }
 </script>
 
