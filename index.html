@@ -51,7 +51,7 @@
 
     <script>
         createCart();
-    document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
+        document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
     </script>
 </head>
 <body>
@@ -116,17 +116,25 @@
 
 <div class="container-fluid">
             <div class="img-container">
-                <img src="images/men.jpg" class="center-img img-fluid rounded">
-                <div class="img-centered"><button class="cat" herf="home.html">MENS SHOES</button></div>
+                <img src="images/women1.jpg" class="center-img img-fluid rounded">
+                <div class="img-centered"><p class="cat">WOMENS SHOES</p></div>
             </div>
             <div class="img-container">
-                <img src="images/women1.jpg" class="center-img img-fluid rounded">
-                <div class="img-centered"><button class="cat" herf="home">WOMENS SHOES</button></div>
+                <img src="images/men.jpg" class="center-img img-fluid rounded">
+                <div class="img-centered"><p class="cat">MENS SHOES</p></div>
             </div>
+
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <p>Footer</p>
+    <div class="row text-center">
+        <a class="btn btn-default" href="#">About Us</a>
+        <a class="btn btn-default" href="pages/FAQ.html">FAQ</a>
+        <a class="btn btn-default" href="#">Customer Services</a>
+        <a class="btn btn-default" href="pages/returns.html">Returns and Refunds</a>
+        <a class="btn btn-default" href="#">Delivery</a>
+        <a class="btn btn-default" href="pages/tracker.html">Order Tracker</a>
+    </div>
 </div>
 
 <script type="text/javascript">

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Golden Shoe - Checkout</title>
+    <title>Golden Shoe - Products</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="../js/utils.js"></script>
+    <script type="text/javascript" src="../js/utils.js"></script>
     <script type="text/javascript" src="../js/cart.js"></script>
 
     <link rel="stylesheet" href="../css/smoothproducts.css">
@@ -17,42 +17,6 @@
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
-
-    <style>
-        .center-img {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 70%;
-        }
-
-        /* Container holding the image and the text */
-        .img-container {
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-
-        /* Centered text */
-        .img-centered {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .cat:hover {
-            color: white;
-        }
-
-        .cat {
-            font-size: xx-large;
-            color: #80bdff;
-            border-color: #1b1e21;
-            background-color: transparent;
-            border-color: transparent;
-        }
-    </style>
 
     <script>
         // Your web app's Firebase configuration
@@ -68,31 +32,11 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        firebase.analytics()
+        firebase.analytics();
 
-        createCart();
-        var itemSelected = "";
-        var discount = 0;
         var db = firebase.firestore();
-
-        function applyCoupon() {
-            var codec = document.getElementById("couponCode").value;
-            //db.collection("coupon").doc(codec).onSnapshot(function(doc) {
-            //    console.log("hi")
-            //    discount = doc.data().value;
-            //});
-            if (codec == "anddigital") discount = 0.16;
-            if (codec == "test") discount = 0.05;
-            if (discount > 0) alert("Discount of "+discount+"% applied!");
-            if (discount == 0) alert("Please enter valid discount code");
-            sessionStorage.setItem('discount',discount);
-            if (sessionStorage.getItem('discount') != 0) {
-                document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total") - (sessionStorage.getItem("total") * sessionStorage.getItem('discount')));
-            } else {
-                document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total"));
-            }
-        }
     </script>
+
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-md bg-faded justify-content-center" style="background-color: #333">
@@ -143,7 +87,7 @@
                 <a class="nav-link" href="#"><img src="../images/user.png" alt="Account" height="30" width=30></a>
             </li>
             <li class="nav-item hidden-md hidden-sm">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="cart.html">
                     <div class="img-container">
                         <img src="../images/bag.png" alt="Cart" height="30" width=30>
                         <div class="img-centered font-weight-bolder" id="amount" style="margin-top: 22%"></div>
@@ -155,37 +99,44 @@
 </nav>
 
 <div class="container-fluid">
-    <br/>
-    <h1 style="text-align: center">Checkout</h1>
-    <br/>
-    <div class="text-center">
-        <button type="button" class="btn btn-secondary" onclick="remove()">Remove Selected Item</button>
-    </div>
-    <br/>
-    <div class="list-group" id="checkout">
+    <h1 class="text-center">Shoe Size Guide</h1>
 
-    </div>
-    <br/>
-    <form class="form-inline justify-content-center" onsubmit="applyCoupon()">
-        <input type="text" class="form-control" id="couponCode" aria-describedby="Coupon Code for Discount" placeholder="Enter Coupon Code">
-        <button type="submit" class="btn btn-secondary">Submit</button>
-    </form>
-    <br/>
-    <div class="text-center">
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-secondary"><input type="radio" name="options" id="option2">Standard Delivery (1-2 Weeks): £3</label>
-            <label class="btn btn-secondary"><input type="radio" name="options" id="option1">Next Day (if ordered before 5pm): £7</label>
-            <label class="btn btn-secondary"><input type="radio" name="options" id="option3">In-Store Collection: £0</label>
-        </div>
-    </div>
-    <br/>
-    <br/>
-    <h3 class="text-center" id="total"></h3>
-    <br/>
-    <div class="text-center">
-        <button type="button" class="btn btn-secondary" onclick="alert('Transfering to payment')">Checkout & Pay</button>
-    </div>
-    <br/>
+    <table class="table text-center">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Our Sizes (UK Sizes)</th>
+            <th scope="col">EU Size</th>
+            <th scope="col">Foot Length (Millmetres)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">2</th>
+            <td>35</td>
+            <td>212</td>
+        </tr>
+        <tr>
+            <th scope="row">2 ½</th>
+            <td>35 ½</td>
+            <td>216</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>36</td>
+            <td>221</td>
+        </tr>
+        <tr>
+            <th scope="row">3 ½</th>
+            <td>36 ½</td>
+            <td>225</td>
+        </tr>
+        <tr>
+            <th scope="row">5</th>
+            <td>38</td>
+            <td>237</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -199,34 +150,8 @@
     </div>
 </div>
 
-<script>
-    displayCart();
-    document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
-    if (sessionStorage.getItem('discount') != 0) {
-        document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total") - (sessionStorage.getItem("total") * sessionStorage.getItem('discount')));
-    } else {
-        document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total"));
-    }
-
-
-    function selected(item) {
-        itemSelected = item;
-        console.log(item)
-    }
-
-    function remove() {
-        removeFromCart(itemSelected);
-        document.getElementById('checkout').innerHTML = "";
-        displayCart()
-        document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
-        if (sessionStorage.getItem('discount') != 0) {
-            document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total") - (sessionStorage.getItem("total") * sessionStorage.getItem('discount')));
-        } else {
-            document.getElementById('total').innerHTML = "Total: £"+parseFloat(sessionStorage.getItem("total"));
-        }
-    }
-</script>
-
+<script type="text/javascript" src="../js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../js/smoothproducts.js"></script>
 <!-- Start of ChatBot code -->
 <script type="text/javascript">
     window.__be = window.__be || {};
