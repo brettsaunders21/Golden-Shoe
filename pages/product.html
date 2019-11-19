@@ -63,7 +63,7 @@
                 '<p></p><h5>Colour: '+doc.data().colour+'</h5>' +
                 '<p></p>' +
                 '<button type="button" class="btn btn-secondary" onclick="trigger()">Add To Cart</button>\n' +
-                '<button type="button" class="btn btn-secondary" onclick="trigger()">Buy Now</button>\n' +
+                '<button type="button" class="btn btn-secondary" onclick="trigger2()">Buy Now</button>\n' +
                 '<p></p>' +
                 '<h5>Sizes</h5>' +
                 '<div class="btn-group" data-toggle="buttons">' +
@@ -87,8 +87,13 @@
             document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length + 1;
         }
 
+        function trigger2() {
+            trigger();
+            window.location.href = 'cart.html';
+        }
+
+
         function setSize(s) {
-            console.log("hi")
             size = s;
         }
 

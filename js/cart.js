@@ -52,7 +52,7 @@ function addToCart(data, size) {
             }
         )
     }
-    alert(data.name + " added to cart!")
+    alert(data.name + ", size " + size + " added to cart!")
 }
 
 function displayCart() {
