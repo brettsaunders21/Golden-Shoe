@@ -52,6 +52,7 @@ function addToCart(data, size) {
             }
         )
     }
+    alert(data.name + " added to cart!")
 }
 
 function displayCart() {
