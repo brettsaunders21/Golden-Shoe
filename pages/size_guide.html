@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="../js/utils.js"></script>
+    <script type="text/javascript" src="../js/utils.js"></script>
     <script type="text/javascript" src="../js/cart.js"></script>
 
     <link rel="stylesheet" href="../css/smoothproducts.css">
@@ -17,42 +17,6 @@
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
-
-    <style>
-        .center-img {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 70%;
-        }
-
-        /* Container holding the image and the text */
-        .img-container {
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-
-        /* Centered text */
-        .img-centered {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .cat:hover {
-            color: white;
-        }
-
-        .cat {
-            font-size: xx-large;
-            color: #80bdff;
-            border-color: #1b1e21;
-            background-color: transparent;
-            border-color: transparent;
-        }
-    </style>
 
     <script>
         // Your web app's Firebase configuration
@@ -70,27 +34,9 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
 
-        createCart();
-
         var db = firebase.firestore();
-        var html = ""
-        var group = getAllUrlParams(window.location.href).group;
-        var cat = getAllUrlParams(window.location.href).cat;
-        db.collection("products").doc(group).collection(cat)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    var myCol = $('<div class="col-sm-3 col-md-3 pb-2"></div>');
-                    var myPanel = $('<a href="product.html?id=' + doc.data().name + '&cat=' + cat + '&group=' + group + '" class="btn"><div class="card"><img class="card-img-top" src="' + doc.data().images[0] + '" alt="Product Image"><div class="card-body"><h5 class="card-title">' + doc.data().name +'</h5><p class="card-text">'+doc.data().colour+'<br/> Price: £' + doc.data().price +'.00  </p></div></div></a>');
-                    myPanel.appendTo(myCol);
-                    myCol.appendTo('#contentPanel');
-                });
-            })
-            .catch(function(error) {
-                console.log("Error getting documents: ", error);
-            });
-
     </script>
+
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-md bg-faded justify-content-center" style="background-color: #333">
@@ -153,7 +99,44 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="row" id="contentPanel"></div>
+    <h1 class="text-center">Shoe Size Guide</h1>
+
+    <table class="table text-center">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Our Sizes (UK Sizes)</th>
+            <th scope="col">EU Size</th>
+            <th scope="col">Foot Length (Millmetres)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">2</th>
+            <td>35</td>
+            <td>212</td>
+        </tr>
+        <tr>
+            <th scope="row">2 ½</th>
+            <td>35 ½</td>
+            <td>216</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>36</td>
+            <td>221</td>
+        </tr>
+        <tr>
+            <th scope="row">3 ½</th>
+            <td>36 ½</td>
+            <td>225</td>
+        </tr>
+        <tr>
+            <th scope="row">5</th>
+            <td>38</td>
+            <td>237</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -166,10 +149,8 @@
     </div>
 </div>
 
-<script>
-    document.getElementById('amount').innerHTML = JSON.parse(sessionStorage.getItem( 'cart' )).items.length;
-</script>
-
+<script type="text/javascript" src="../js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../js/smoothproducts.js"></script>
 <!-- Start of ChatBot code -->
 <script type="text/javascript">
     window.__be = window.__be || {};
